@@ -1,0 +1,13 @@
+node_modules/
+**/node_modules/
+**/dist/
+**/.vite/
+**/__pycache__/
+**/.pytest_cache/
+*.log
+.env
+.env.*
+!.env.development
+!.env.production
+.DS_Store
+**/venv/

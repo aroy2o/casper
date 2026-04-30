@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e3a5f"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#38bdf8"/>
+      <stop offset="100%" style="stop-color:#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Outer ring accent -->
+  <rect width="128" height="128" rx="28" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.3"/>
+  <!-- Document icon shape -->
+  <path d="M38 28 L78 28 L92 42 L92 100 L38 100 Z" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <!-- Fold corner -->
+  <path d="M78 28 L78 42 L92 42 Z" fill="#38bdf8" opacity="0.6"/>
+  <!-- Lines representing text/data -->
+  <line x1="48" y1="56" x2="82" y2="56" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="48" y1="66" x2="82" y2="66" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+  <line x1="48" y1="76" x2="70" y2="76" stroke="#475569" stroke-width="2" stroke-linecap="round"/>
+  <!-- Alert dot (fraud detection indicator) -->
+  <circle cx="86" cy="88" r="10" fill="#ef4444"/>
+  <text x="86" y="93" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="900" fill="white">!</text>
+</svg>

@@ -1,0 +1,35 @@
+import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setRegion, setDistrict, resetRegion } from "../features/analytics/analyticsSlice";
+import { useGetStateListQuery } from "../features/analytics/analyticsApi";
+export const RegionSelector = () => {
+    const dispatch = useAppDispatch();
+    const { selectedStateCode, selectedStateName, selectedDistrictCode, selectedDistrictName } = useAppSelector((s) => s.analytics);
+    const { data: stateList = [] } = useGetStateListQuery();
+    const [stateOpen, setStateOpen] = useState(false);
+    const [districtOpen, setDistrictOpen] = useState(false);
+    const [stateSearch, setStateSearch] = useState("");
+    const stateRef = useRef(null);
+    const districtRef = useRef(null);
+    useEffect(() => {
+        const handler = (e) => {
+            if (stateRef.current && !stateRef.current.contains(e.target))
+                setStateOpen(false);
+            if (districtRef.current && !districtRef.current.contains(e.target))
+                setDistrictOpen(false);
+        };
+        document.addEventListener("mousedown", handler);
+        return () => document.removeEventListener("mousedown", handler);
+    }, []);
+    const selectedStateInfo = stateList.find((s) => s.code === selectedStateCode);
+    const filteredStates = stateList.filter((s) => stateSearch === "" || s.name.toLowerCase().includes(stateSearch.toLowerCase()));
+    return (_jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [_jsxs("div", { ref: stateRef, className: "relative", children: [_jsxs("button", { type: "button", onClick: () => { setStateOpen((o) => !o); setDistrictOpen(false); }, className: "flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800", children: [_jsxs("svg", { viewBox: "0 0 24 24", className: "h-3.5 w-3.5 fill-none stroke-current stroke-2", children: [_jsx("path", { d: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Z" }), _jsx("circle", { cx: "12", cy: "9", r: "2.5" })] }), selectedStateName ?? "All India", _jsx("svg", { viewBox: "0 0 24 24", className: "h-3 w-3 fill-none stroke-current stroke-2", children: _jsx("path", { d: "m6 9 6 6 6-6" }) })] }), stateOpen && (_jsxs("div", { className: "absolute left-0 top-full z-50 mt-1 w-64 rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900", children: [_jsx("div", { className: "p-2", children: _jsx("input", { autoFocus: true, value: stateSearch, onChange: (e) => setStateSearch(e.target.value), placeholder: "Search state...", className: "w-full rounded-lg border border-slate-200 px-2 py-1.5 text-sm outline-none focus:border-casper-blue dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" }) }), _jsxs("div", { className: "max-h-64 overflow-y-auto", children: [_jsx("button", { type: "button", onClick: () => { dispatch(resetRegion()); setStateOpen(false); setStateSearch(""); }, className: "w-full px-3 py-2 text-left text-sm font-semibold text-casper-blue hover:bg-blue-50 dark:hover:bg-slate-800", children: "\uD83C\uDF0F All India (Pan-India)" }), _jsx("div", { className: "border-t border-slate-100 dark:border-slate-800 my-1" }), filteredStates.map((s) => (_jsxs("button", { type: "button", onClick: () => {
+                                            dispatch(setRegion({ stateCode: s.code, stateName: s.name }));
+                                            setStateOpen(false);
+                                            setStateSearch("");
+                                        }, className: `w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-800 ${selectedStateCode === s.code ? "bg-blue-50 font-medium text-casper-blue dark:bg-slate-800" : "text-slate-700 dark:text-slate-300"}`, children: [_jsx("span", { className: "text-xs text-slate-400 mr-1", children: s.code }), s.name, s.type === "ut" && _jsx("span", { className: "ml-1 text-xs text-slate-400", children: "(UT)" })] }, s.code)))] })] }))] }), selectedStateInfo && (_jsxs("div", { ref: districtRef, className: "relative", children: [_jsxs("button", { type: "button", onClick: () => { setDistrictOpen((o) => !o); setStateOpen(false); }, className: "flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200", children: [_jsxs("svg", { viewBox: "0 0 24 24", className: "h-3.5 w-3.5 fill-none stroke-current stroke-2", children: [_jsx("rect", { x: "3", y: "3", width: "7", height: "7", rx: "1" }), _jsx("rect", { x: "14", y: "3", width: "7", height: "7", rx: "1" }), _jsx("rect", { x: "14", y: "14", width: "7", height: "7", rx: "1" }), _jsx("rect", { x: "3", y: "14", width: "7", height: "7", rx: "1" })] }), selectedDistrictName ?? "All Districts", _jsx("svg", { viewBox: "0 0 24 24", className: "h-3 w-3 fill-none stroke-current stroke-2", children: _jsx("path", { d: "m6 9 6 6 6-6" }) })] }), districtOpen && (_jsx("div", { className: "absolute left-0 top-full z-50 mt-1 w-52 rounded-xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900", children: _jsxs("div", { className: "max-h-64 overflow-y-auto", children: [_jsx("button", { type: "button", onClick: () => { dispatch(setDistrict({ districtCode: null, districtName: null })); setDistrictOpen(false); }, className: "w-full px-3 py-2 text-left text-sm font-semibold text-casper-blue hover:bg-blue-50 dark:hover:bg-slate-800", children: "All Districts" }), _jsx("div", { className: "border-t border-slate-100 dark:border-slate-800 my-1" }), selectedStateInfo.districts.map((d) => (_jsx("button", { type: "button", onClick: () => {
+                                        dispatch(setDistrict({ districtCode: d.code, districtName: d.name }));
+                                        setDistrictOpen(false);
+                                    }, className: `w-full px-3 py-2 text-left text-sm hover:bg-slate-50 dark:hover:bg-slate-800 ${selectedDistrictCode === d.code ? "bg-blue-50 font-medium text-casper-blue dark:bg-slate-800" : "text-slate-700 dark:text-slate-300"}`, children: d.name }, d.code)))] }) }))] })), selectedStateName && (_jsxs("div", { className: "flex items-center gap-1 rounded-full bg-casper-blue/10 px-2.5 py-1 text-xs font-medium text-casper-blue", children: [selectedStateName, selectedDistrictName && _jsxs(_Fragment, { children: [_jsx("span", { className: "opacity-60", children: "\u203A" }), selectedDistrictName] }), _jsx("button", { type: "button", onClick: () => dispatch(resetRegion()), className: "ml-1 rounded-full hover:bg-casper-blue/20 p-0.5", children: _jsx("svg", { viewBox: "0 0 24 24", className: "h-3 w-3 fill-none stroke-current stroke-2", children: _jsx("path", { d: "M18 6 6 18M6 6l12 12" }) }) })] }))] }));
+};

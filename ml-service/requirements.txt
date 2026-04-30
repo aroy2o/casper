@@ -1,0 +1,16 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pdfminer.six==20240706
+PyMuPDF==1.24.10
+spacy==3.7.6
+scikit-learn==1.5.2
+xgboost==2.1.1
+pandas==2.2.3
+numpy==2.1.2
+pydantic==2.9.2
+python-dotenv==1.0.1
+requests==2.32.3
+joblib==1.4.2
+APScheduler==3.10.4
+shap>=0.44.0
+lime>=0.2.0.1
