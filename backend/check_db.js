@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI = 'mongodb+srv://abhijeetroy20:%40Please990@cluster0.c2dovsj.mongodb.net/';
+const MONGO_URI = '';
 const tenderSchema = new mongoose.Schema({ title: String, tenderNumber: { type: String, unique: true } });
 const Tender = mongoose.model('Tender', tenderSchema);
 
